@@ -1,19 +1,38 @@
-/.phpunit.cache
+<<<<<<< HEAD
+# Laravel / PHP
+/vendor
 /node_modules
+/.phpunit.cache
+.phpunit.result.cache
+/storage/*.key
 /public/build
 /public/hot
 /public/storage
-/storage/*.key
-/vendor
+/public_html/storage
+/public_html/hot
+/storage/pail
+
+# Lingkungan
 .env
 .env.backup
 .env.production
-.phpunit.result.cache
+
+# Tools dan Logs
 Homestead.json
 Homestead.yaml
 auth.json
 npm-debug.log
 yarn-error.log
+.phpactor.json
+
+# Editor dan IDE
 /.fleet
 /.idea
 /.vscode
+/.vagrant
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+>>>>>>> 6c4c6a071adb7a210b3761bba91b7834e1072826
