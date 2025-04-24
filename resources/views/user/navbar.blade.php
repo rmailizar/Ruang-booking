@@ -1,0 +1,36 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+
+      <li class="nav-item">
+        <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+          <i class="menu-icon mdi mdi-grid-large"></i>
+          <span class="menu-title">Dashboard</span>
+        </x-nav-link>
+      </li>
+
+      <li class="nav-item nav-category">Peminjaman</li>
+
+      <li class="nav-item">
+        <x-nav-link :href="route('bookings.roomList')" :active="request()->routeIs('bookings.roomList')">
+          <i class="menu-icon mdi mdi-folder-move"></i>
+          <span class="menu-title">Pinjam Ruangan</span>
+        </x-nav-link>
+      </li>
+
+      <li class="nav-item">
+        <x-nav-link :href="route('bookings.myBookings')" :active="request()->routeIs('bookings.myBookings')">
+            <i class="menu-icon mdi mdi-calendar-check"></i>
+            <span class="menu-title">Peminjaman Saya</span>
+        </x-nav-link>
+      </li>
+
+      <li class="nav-item nav-category">Lainnya</li>
+
+      <li class="nav-item">
+        <x-nav-link :href="route('logout')" :active="false">
+          <i class="menu-icon mdi mdi-exit-to-app"></i>
+          <span class="menu-title">Log out</span>
+        </x-nav-link>
+      </li>
+    </ul>
+  </nav>

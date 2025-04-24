@@ -1,0 +1,91 @@
+@extends('layouts.app')
+
+@section('title', 'Room') 
+
+@section('content')
+<div class="container py-4">
+  <div class="row mb-4">
+      <!-- Total Ruangan -->
+      <div class="col-md-3 mb-4">
+          <div class="card text-white bg-primary shadow">
+              <div class="card-body">
+                  <h5 class="card-title text-white">Total Ruangan</h5>
+                  <h2></h2>
+                  <p>Total ruangan yang dimiliki</p>
+                  <p class="fw-semibold fs-3">{{ $totalRooms }}</p>
+              </div>
+          </div>
+      </div>
+      <!-- Total Pengguna -->
+      <div class="col-md-3 mb-4">
+          <div class="card text-white bg-info shadow">
+              <div class="card-body">
+                  <h5 class="card-title text-white">Total Pengguna</h5>
+                  <h2></h2>
+                  <p>Total pengguna saat ini</p>
+                  <p class="fw-semibold fs-3">{{ $totalUsers }}</p>
+              </div>
+          </div>
+      </div>
+      <!-- Total Peminjaman -->
+      <div class="col-md-3 mb-4">
+          <div class="card text-white bg-danger shadow">
+              <div class="card-body">
+                  <h5 class="card-title text-white">Total Peminjaman</h5>
+                  <h2></h2>
+                  <p>Total peminjaman dari awal</p>
+                  <p class="fw-semibold fs-3">{{ $totalBookings }}</p>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+<h2 style="margin-left: 30px">Daftar Ruangan</h2>
+    <div class="content-wrapper">
+        <div class="row">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Table Ruangan</h4>
+                </p>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Lokasi</th>
+                        <th>Kapasitas</th>
+                        <th>Deskripsi</th> 
+                        <th>Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{-- <td><label class="badge badge-info">Fixed</label></td> --}}
+                    <a href="{{ route('rooms.create') }}" class="text-decoration-none fw-bold badge badge-info fs-6 mb-2">+ Tambah Ruangan</a>
+                      @foreach ($rooms as $index => $room)
+                          <tr>
+                            
+                              <td>{{ $index + 1 }}</td>
+                              <td>{{ $room->name }}</td>
+                              <td>{{ $room->location }}</td>
+                              <td>{{ $room->capacity }}</td>
+                              <td>{{ $room->description }}</td> 
+                              <td>
+                                <a href="{{ route('rooms.edit', $room) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a> | 
+                                <form action="{{ route('rooms.destroy', $room) }}" method="POST" style="display:inline">
+                                    @csrf @method('DELETE')
+                                    <button onclick="return confirm('Delete?')" class="btn rounded btn-sm btn-danger">Hapus</button>
+                                </form>
+                              </td>
+                          </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+@endsection
