@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function(){
     // Halaman daftar ruangan untuk dipinjam (dengan tombol "Pinjam")
     Route::get('/booking-ruangan', [RoomBookingController::class, 'roomList'])->name('bookings.roomList');
 
-    // Admin - ajukan booking
+    // Ajukan booking
     Route::get('/bookings/create', [RoomBookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings', [RoomBookingController::class, 'store'])->name('bookings.store');
 

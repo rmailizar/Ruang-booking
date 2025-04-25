@@ -14,7 +14,7 @@ class RoomController extends Controller
         $totalRooms = Room::count();
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
-        $rooms = Room::all();
+        $rooms = Room::paginate('10');
 
         return view('admin.show_room', compact('rooms', 'totalRooms', 'totalUsers', 'totalBookings'));
 

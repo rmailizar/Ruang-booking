@@ -57,6 +57,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
                             <th>No. HP</th>
@@ -67,17 +68,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <a href="{{ route('admin.users.create') }}" class="text-decoration-none fw-bold badge badge-info fs-6 mb-2">+ Tambah User</a>
+                        <a href="{{ route('admin.users.create') }}" class="text-decoration-none text-white rounded fw-bold btn btn-sm bg-info fs-6 mb-2">+ Tambah User</a>
                         @foreach($users as $index => $user)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $users->firstItem() + $index }}</td>
+                            <td>{{ $user->name}}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->no_hp }}</td>
                             <td>{{ $user->role }}</td>
                             <td>{{ $user->nim }}</td>
                             <td>{{ $user->jurusan }}</td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a>
+                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a> |
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline">
                                     @csrf @method('DELETE')
                                     <button class="btn rounded btn-sm btn-danger" onclick="return confirm('Hapus user ini?')">Hapus</button>
@@ -87,6 +89,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                {{ $users->links('pagination::bootstrap-4') }}
             </div>
           </div>
         </div>

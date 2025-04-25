@@ -17,7 +17,8 @@ class RoomBookingController extends Controller
         $totalRooms = Room::count();
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
-        $bookings = RoomBooking::with(['user', 'room'])->get();
+        $bookings = RoomBooking::with(['user', 'room'])
+        ->paginate(10);
 
         return view('admin.show_booking', compact('bookings', 'totalRooms', 'totalUsers', 'totalBookings'));
     }
@@ -28,7 +29,7 @@ class RoomBookingController extends Controller
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
         $rooms = Room::all();
-        return view('admin.booking',  compact('rooms', 'totalRooms', 'totalUsers', 'totalBookings'));
+        return view('booking.booking',  compact('rooms', 'totalRooms', 'totalUsers', 'totalBookings'));
     }
 
     public function myBookings()
@@ -38,7 +39,7 @@ class RoomBookingController extends Controller
         $bookings = RoomBooking::with(['room', 'user'])
             ->where('user_id', $userId)
             ->orderBy('start_time', 'desc')
-            ->get();         
+            ->paginate(10);         
             if ($user->role === 'admin') {
                 return view('admin.my_booking', compact('bookings'));
             } else {

@@ -3,45 +3,45 @@
 @section('title', 'Room') 
 
 @section('content')
-<div class="container py-4">
-  <div class="row mb-4">
-      <!-- Total Ruangan -->
-      <div class="col-md-3 mb-4">
-          <div class="card text-white bg-primary shadow">
-              <div class="card-body">
-                  <h5 class="card-title text-white">Total Ruangan</h5>
-                  <h2></h2>
-                  <p>Total ruangan yang dimiliki</p>
-                  <p class="fw-semibold fs-3">{{ $totalRooms }}</p>
+  {{-- Card Total --}}
+  <div class="content-wrapper">
+    <div class="container py-4">
+      <div class="row mb-4">
+          <!-- Total Ruangan -->
+          <div class="col-md-4 mb-4">
+              <div class="card text-white bg-primary shadow">
+                  <div class="card-body">
+                      <h5 class="card-title text-white">Total Ruangan</h5>
+                      <p class="card-text">Total ruangan yang dimiliki</p>
+                      <p class="fw-semibold fs-3">{{ $totalRooms }}</p>
+                  </div>
+              </div>
+          </div>
+          <!-- Total Pengguna -->
+          <div class="col-md-4 mb-4">
+              <div class="card text-white bg-info shadow">
+                  <div class="card-body">
+                      <h5 class="card-title text-white">Total Pengguna</h5>
+                      <p>Total pengguna saat ini</p>
+                      <p class="fw-semibold fs-3">{{ $totalUsers }}</p>
+                  </div>
+              </div>
+          </div>
+          <!-- Total Peminjaman -->
+          <div class="col-md-4 mb-4">
+              <div class="card text-white bg-danger shadow">
+                  <div class="card-body">
+                      <h5 class="card-title text-white">Total Peminjaman</h5>
+                      <p>Total peminjaman dari awal</p>
+                      <p class="fw-semibold fs-3">{{ $totalBookings }}</p>
+                  </div>
               </div>
           </div>
       </div>
-      <!-- Total Pengguna -->
-      <div class="col-md-3 mb-4">
-          <div class="card text-white bg-info shadow">
-              <div class="card-body">
-                  <h5 class="card-title text-white">Total Pengguna</h5>
-                  <h2></h2>
-                  <p>Total pengguna saat ini</p>
-                  <p class="fw-semibold fs-3">{{ $totalUsers }}</p>
-              </div>
-          </div>
-      </div>
-      <!-- Total Peminjaman -->
-      <div class="col-md-3 mb-4">
-          <div class="card text-white bg-danger shadow">
-              <div class="card-body">
-                  <h5 class="card-title text-white">Total Peminjaman</h5>
-                  <h2></h2>
-                  <p>Total peminjaman dari awal</p>
-                  <p class="fw-semibold fs-3">{{ $totalBookings }}</p>
-              </div>
-          </div>
-      </div>
-  </div>
-  
-<h2 style="margin-left: 30px">Daftar Ruangan</h2>
-    <div class="content-wrapper">
+      {{-- End Card Total --}}
+      
+      {{-- Tabel Ruangan --}}
+      <h2>Daftar Ruangan</h2>
         <div class="row">
           <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -51,7 +51,7 @@
                 <div class="table-responsive">
                   <table class="table table-striped">
                     <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Nama</th>
                         <th>Lokasi</th>
@@ -62,11 +62,10 @@
                     </thead>
                     <tbody>
                     {{-- <td><label class="badge badge-info">Fixed</label></td> --}}
-                    <a href="{{ route('rooms.create') }}" class="text-decoration-none fw-bold badge badge-info fs-6 mb-2">+ Tambah Ruangan</a>
+                    <a href="{{ route('rooms.create') }}" class="text-decoration-none fw-bold btn btn-sm rounded bg-info fs-6 mb-2 text-white">+ Tambah Ruangan</a>
                       @foreach ($rooms as $index => $room)
-                          <tr>
-                            
-                              <td>{{ $index + 1 }}</td>
+                          <tr class="text-center">                
+                              <td>{{ $rooms->firstItem() + $index }}</td>
                               <td>{{ $room->name }}</td>
                               <td>{{ $room->location }}</td>
                               <td>{{ $room->capacity }}</td>
@@ -83,9 +82,13 @@
                     </tbody>
                   </table>
                 </div>
+                <div class="d-flex justify-content-end mt-3">
+                  {{ $rooms->links('pagination::bootstrap-4') }}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {{-- End Table Ruangan --}}
 @endsection

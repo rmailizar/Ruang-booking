@@ -12,7 +12,7 @@ class UserDBController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate('10');
         $totalRooms = Room::count();
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
