@@ -59,6 +59,7 @@
                         <tr>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>No. HP</th>
                             <th>Role</th>
                             <th>NIM</th>
                             <th>Jurusan</th>
@@ -71,6 +72,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->no_hp }}</td>
                             <td>{{ $user->role }}</td>
                             <td>{{ $user->nim }}</td>
                             <td>{{ $user->jurusan }}</td>
