@@ -25,6 +25,7 @@ class User extends Authenticatable
         'no_hp',
         'nim',
         'jurusan',
+        'image',
     ];
 
     /**

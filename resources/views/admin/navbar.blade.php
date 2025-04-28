@@ -50,6 +50,13 @@
       <li class="nav-item nav-category">Lainnya</li>
 
       <li class="nav-item">
+        <x-nav-link :href="route('biodata')" :active="false">
+          <i class="menu-icon mdi mdi-account-box-outline"></i>
+          <span class="menu-title">Biodata</span>
+        </x-nav-link>
+      </li>
+
+      <li class="nav-item">
         <x-nav-link :href="route('logout')" :active="false">
           <i class="menu-icon mdi mdi-exit-to-app"></i>
           <span class="menu-title">Log out</span>
@@ -57,3 +64,5 @@
       </li>
     </ul>
   </nav>
+
+  

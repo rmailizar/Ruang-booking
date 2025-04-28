@@ -29,18 +29,15 @@ Route::middleware(['guest'])->group(function(){
 });
 
 Route::middleware(['auth'])->group(function(){
-
-    //History booking
+    // History booking
     Route::get('/my-bookings', [RoomBookingController::class, 'myBookings'])->name('bookings.myBookings');
-    Route::get('/admin/my-bookings', [RoomBookingController::class, 'myBookings'])->name('admin.my_bookings');
-    Route::get('/user/my-bookings', [RoomBookingController::class, 'myBookings'])->name('user.my_bookings');
 
+    // Batalkan booking
+    Route::delete('/bookings/{booking}', [RoomBookingController::class, 'cancel'])->name('bookings.cancel');
 
-    //Crud Room Booking
+    // Lihat Room 
     Route::get('/rooms/show', [RoomController::class, 'index'])->name('rooms.index');
-    // Admin - lihat semua booking
-    Route::get('/bookings', [RoomBookingController::class, 'index'])->name('bookings.index');
-    
+
     // Halaman daftar ruangan untuk dipinjam (dengan tombol "Pinjam")
     Route::get('/booking-ruangan', [RoomBookingController::class, 'roomList'])->name('bookings.roomList');
 
@@ -48,29 +45,36 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/bookings/create', [RoomBookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings', [RoomBookingController::class, 'store'])->name('bookings.store');
 
-    // Admin - update status atau hapus
-    Route::put('/bookings/{booking}/status', [RoomBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
-    Route::delete('/bookings/{booking}', [RoomBookingController::class, 'destroy'])->name('bookings.destroy');
+    // Profile
+    Route::get('/biodata', [SesiController::class, 'biodata'])->name('biodata');
 
-    //logout
+    // logout
     Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
 });
 
 Route::prefix('admin')->middleware(['auth', 'userAkses:admin'])->group(function () {
     // Admin Dashboard
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+        
+    // Admin - lihat semua booking
+    Route::get('/bookings', [RoomBookingController::class, 'index'])->name('bookings.index');
+    
+    // Admin - update status booking atau hapus booking
+    Route::put('/bookings/{booking}/status', [RoomBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+    Route::delete('/bookings/{booking}', [RoomBookingController::class, 'destroy'])->name('bookings.destroy');
 
-    //Download History Booking
+
+    // Admin - Download History Booking
     Route::get('/export-bookings', [RoomBookingController::class, 'export'])->name('bookings.export');
 
-    //Crud Room
+    // Admin - Crud Room
     Route::get('/rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('/rooms/store', [RoomController::class, 'store'])->name('rooms.store');
     Route::get('/rooms/{room}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
     Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
     Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
 
-    //Crud User
+    // Admin - Crud User
     Route::resource('users', UserDBController::class)->names([
         'index' => 'admin.users.index',
         'create' => 'admin.users.create',
@@ -82,7 +86,7 @@ Route::prefix('admin')->middleware(['auth', 'userAkses:admin'])->group(function 
 });
 
 Route::prefix('user')->middleware(['auth', 'userAkses:user'])->group(function () {
-    //User Dashboard
+    // User Dashboard
     Route::get('/', [UserController::class, 'user'])->name('user.dashboard');
 });
 

@@ -31,12 +31,19 @@ class UserDBController extends Controller
         $request->validate([
             'name'     => 'required',
             'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
             'role'     => 'required|in:user,admin',
             'no_hp'    => 'required',
             'nim'      => 'nullable',
             'jurusan'  => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('user_images', 'public');
+        } else {
+            $imagePath = null;
+        }
 
         User::create([
             'name'     => $request->name,
@@ -46,6 +53,7 @@ class UserDBController extends Controller
             'no_hp'    => $request->no_hp,
             'nim'      => $request->nim,
             'jurusan'  => $request->jurusan,
+            'image'    => $imagePath,
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan.');
@@ -65,7 +73,14 @@ class UserDBController extends Controller
             'no_hp'   => 'required',
             'nim'     => 'nullable',
             'jurusan' => 'nullable',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('user_images', 'public');
+        } else {
+            $imagePath = null;
+        }
 
         $user->update([
             'name'    => $request->name,
@@ -74,6 +89,7 @@ class UserDBController extends Controller
             'no_hp'   => $request->no_hp,
             'nim'     => $request->nim,
             'jurusan' => $request->jurusan,
+            'image'    => $imagePath,
         ]);
 
         if ($request->password) {

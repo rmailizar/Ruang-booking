@@ -6,13 +6,13 @@
 
 <div class="content-wrapper">
     {{-- Tabel Booking --}}
-    <h2>Daftar Booking</h2>
+    <h2>History Peminjaman</h2>
     
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Table Booking</h4>
+            <h4 class="card-title">History Peminjaman </h4>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -45,10 +45,10 @@
                                 <td>{{ $booking->catatan ?? '-' }}</td>
                                 <td>
                                     @if($booking->status === 'pending' || $booking->status === 'approved')
-                                    <form action="{{ route('bookings.destroy', $booking) }}" method="POST" style="display:inline">
+                                    <form action="{{ route('bookings.cancel', $booking) }}" method="POST" style="display:inline">
                                         @csrf 
                                         @method('DELETE')
-                                        <button onclick="return confirm('Delete?')" class="btn rounded btn-sm btn-danger">Batalkan</button>
+                                        <button class="btn rounded btn-sm btn-danger">Batalkan</button>
                                     </form>
                                     @endif
                                 </td>

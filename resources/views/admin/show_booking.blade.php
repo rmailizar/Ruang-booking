@@ -13,7 +13,7 @@
     <div class="container py-4">
         <div class="row mb-4">
             <!-- Total Ruangan -->
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card text-white bg-primary shadow">
                     <div class="card-body">
                         <h5 class="card-title text-white">Total Ruangan</h5>
@@ -23,19 +23,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Total Pengguna -->
-            <div class="col-md-3 mb-4">
-                <div class="card text-white bg-info shadow">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">Total Pengguna</h5>
-                        <h2></h2>
-                        <p>Total pengguna saat ini</p>
-                        <p class="fw-semibold fs-3">{{ $totalUsers }}</p>
-                    </div>
-                </div>
-            </div>
             <!-- Total Peminjaman -->
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card text-white bg-danger shadow">
                     <div class="card-body">
                         <h5 class="card-title text-white">Total Peminjaman</h5>
@@ -72,13 +61,13 @@
     {{-- end Download Laporan --}}
 
     {{-- Tabel Booking --}}
-    <h2>Daftar Booking</h2>
+    <h2>Daftar Peminjaman</h2>
 
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Table Booking</h4>
+            <h4 class="card-title">Table Peminjaman</h4>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -115,20 +104,20 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="approved">
-                                            <button class="btn rounded btn-primary btn-sm" type="submit">Approve</button> |
+                                            <button class="fw-bold btn text-white rounded bg-success btn-sm" type="submit">Approve</button> |
                                         </form>
                                         <form action="{{ route('bookings.updateStatus', $booking->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="rejected">
-                                            <button class="btn rounded btn-warning btn-sm" type="submit">Reject</button> |
+                                            <button class="fw-bold btn rounded btn-warning btn-sm" type="submit">Reject</button> |
                                         </form>
                                     @endif
                                     <form action="{{ route('bookings.destroy', $booking) }}" method="POST" style="display:inline">
                                         @csrf 
                                         @method('DELETE')
-                                        <button onclick="return confirm('Delete?')" class="btn rounded btn-sm btn-danger">Hapus</button>
-                                    </form>
+                                        <button onclick="return confirm('Delete?')" class="fw-bold btn rounded btn-sm btn-danger">Hapus</button>
+                                    </form>  
                                 </td>
                             </tr>
                         @endforeach

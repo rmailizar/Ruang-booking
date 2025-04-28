@@ -25,7 +25,7 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Formulir Data Ruangan</h4>
-            <form class="forms-sample" action="{{ route('admin.users.store') }}" method="POST">
+            <form class="forms-sample" action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                 <label for="name">Nama</label>
@@ -50,6 +50,10 @@
               <div class="form-group">
                 <label for="password">Password</label>
                 <input name="password" class="form-control" type="password" id="password" placeholder="Password" required>
+              </div>
+              <div class="form-group">
+                <label for="image" class="form-label">Upload Foto</label>
+                <input class="form-control" type="file" id="image" name="image">
               </div>
               <div class="form-group">
                 <label for="role">Role</label>

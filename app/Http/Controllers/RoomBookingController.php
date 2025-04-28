@@ -40,11 +40,8 @@ class RoomBookingController extends Controller
             ->where('user_id', $userId)
             ->orderBy('start_time', 'desc')
             ->paginate(10);         
-            if ($user->role === 'admin') {
-                return view('admin.my_booking', compact('bookings'));
-            } else {
-                return view('user.my_booking', compact('bookings'));
-            }
+
+        return view('booking.my_booking', compact('bookings'));
     }
 
     public function export(Request $request)
@@ -127,6 +124,13 @@ class RoomBookingController extends Controller
         ]);
 
         return redirect()->route('bookings.index')->with('success', 'Status diperbarui.');
+    }
+
+    // Batalkan booking
+    public function cancel(RoomBooking $booking)
+    {
+        $booking->delete();
+        return redirect()->route('bookings.myBookings')->with('success', 'Booking dibatalkan.');
     }
 
     // Hapus booking

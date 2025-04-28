@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,6 +10,11 @@ class SesiController extends Controller
 {
     function index(){
         return view('auth.login');
+    }
+
+    function biodata(){
+        $user = Auth::user(); 
+        return view('biodata', compact('user'));
     }
 
     function login(Request $request){

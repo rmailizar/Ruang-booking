@@ -28,11 +28,12 @@
                     <textarea name="description" class="form-control" id="deskripsi" placeholder="Description">{{ $room->description }}</textarea><br>
                   </div>
                   <button type="submit" class="btn btn-primary me-2">Submit</button>
-                  <button class="btn btn-light">Cancel</button>
+                  <a class="btn btn-light" href="{{ route('rooms.index') }}">Cancel</a>
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
 @endsection
