@@ -33,6 +33,7 @@
                 <thead>
                 <tr class="text-center">
                     <th>No</th>
+                    <th class="text-start">Foto</th>
                     <th>Nama</th>
                     <th>Lokasi</th>
                     <th>Kapasitas</th>
@@ -46,6 +47,15 @@
                   @foreach ($rooms as $index => $room)
                       <tr class="text-center">                
                           <td>{{ $rooms->firstItem() + $index }}</td>
+                          <td class="text-start">
+                            @if($room->image)
+                                <img src="{{ asset('storage/'.$room->image) }}" alt="Foto User" width="60" height="70" class="rounded-circle">
+                            @else
+                                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width:40px; height:40px; font-size:15px;">
+                                    {{ strtoupper(substr($room->name, 0, 2)) }}
+                                </div>
+                            @endif
+                          </td>
                           <td>{{ $room->name }}</td>
                           <td>{{ $room->location }}</td>
                           <td>{{ $room->capacity }}</td>

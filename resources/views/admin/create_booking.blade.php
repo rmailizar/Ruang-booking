@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="content-wrapper">
     <h4>Form Peminjaman Ruangan: {{ $room->name }}</h4>
 
     @if ($errors->any())
         <div class="alert alert-danger">{{ $errors->first() }}</div>
     @endif
-<div class="content-wrapper">
     <div class="row">
-      <div class="col-md-8 grid-margin stretch-card">
+      <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Formulir Booking</h4>
@@ -49,6 +50,42 @@
           </div>
         </div>
       </div>
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Jadwal Peminjaman Ruangan: {{ $room->name }}</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Waktu Mulai</th>
+                            <th>Waktu Selesai</th>
+                            <th>Acara/Kegiatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($bookings as $index => $booking)
+                            <tr class="text-center">
+                                <td>{{ $bookings->firstItem() + $index }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->start_time)->format('d/m/Y H:i') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->end_time)->format('d/m/Y H:i') }}</td>
+                                <td>{{ $booking->reason ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center">Belum ada peminjaman untuk ruangan ini.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+                <div class="d-flex justify-content-end mt-3">
+                    {{ $bookings->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
   </div>
 @endsection

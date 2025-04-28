@@ -57,7 +57,7 @@
                                 @if($user->image)
                                     <img src="{{ asset('storage/'.$user->image) }}" alt="Foto User" width="50" height="60" class="rounded-circle">
                                 @else
-                                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width:50px; height:60px; font-size:0px;">
+                                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width:40px; height:40px; font-size:15px;">
                                         {{ strtoupper(substr($user->name, 0, 2)) }}
                                     </div>
                                 @endif

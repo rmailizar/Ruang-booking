@@ -110,14 +110,17 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="status" value="rejected">
-                                            <button class="fw-bold btn rounded btn-warning btn-sm" type="submit">Reject</button> |
+                                            <button class="fw-bold btn rounded btn-danger btn-sm" type="submit">Reject</button>
                                         </form>
                                     @endif
+                                    @if($booking->status === 'approved' || $booking->status === 'rejected')
+                                    <a href="{{ route('bookings.edit', $booking->id) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a> |
                                     <form action="{{ route('bookings.destroy', $booking) }}" method="POST" style="display:inline">
                                         @csrf 
                                         @method('DELETE')
                                         <button onclick="return confirm('Delete?')" class="fw-bold btn rounded btn-sm btn-danger">Hapus</button>
-                                    </form>  
+                                    </form>
+                                    @endif                
                                 </td>
                             </tr>
                         @endforeach

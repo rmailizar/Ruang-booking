@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    </div>
+ </div>
     {{-- End Table Booking --}}
 
 
