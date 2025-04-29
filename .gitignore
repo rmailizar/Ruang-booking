@@ -4,13 +4,8 @@
 /node_modules
 /.phpunit.cache
 .phpunit.result.cache
-/storage/*.key
 /public/build
 /public/hot
-/public/storage
-/public_html/storage
-/public_html/hot
-/storage/pail
 
 # Lingkungan
 .env

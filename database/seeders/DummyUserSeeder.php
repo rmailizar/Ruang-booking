@@ -17,6 +17,9 @@ class DummyUserSeeder extends Seeder
             [
                 'name'=>'user',
                 'email'=>'user@gmail.com',
+                'no_hp' => '08965463748',
+                'nim' => '3337220096',
+                'jurusan' => 'Industri',
                 'role'=>'user',
                 'password'=>bcrypt('user123')
             ],
@@ -24,6 +27,9 @@ class DummyUserSeeder extends Seeder
             [
                 'name'=>'admin',
                 'email'=>'admin@gmail.com',
+                'no_hp' => '08965438448',
+                'nim' => '3337220023',
+                'jurusan' => 'Informatika',
                 'role'=>'admin',
                 'password'=>bcrypt('admin123')
             ]
