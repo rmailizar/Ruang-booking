@@ -9,12 +9,32 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $totalRooms = Room::count();
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
-        $rooms = Room::paginate('10');
+
+        $query = Room::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                ->orWhere('location', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%");
+            });
+        }
+
+        // Filter capacity
+        if ($request->filled('capacity_min')) {
+            $query->where('capacity', '>=', $request->capacity_min);
+        }
+        if ($request->filled('capacity_max')) {
+            $query->where('capacity', '<=', $request->capacity_max);
+        }
+
+        $rooms = $query->paginate(10)->appends($request->all());
 
         return view('admin.show_room', compact('rooms', 'totalRooms', 'totalUsers', 'totalBookings'));
 

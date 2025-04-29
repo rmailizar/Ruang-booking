@@ -10,15 +10,28 @@ use Illuminate\Support\Facades\Hash;
 
 class UserDBController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate('10');
         $totalRooms = Room::count();
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
 
-        return view('admin.show_user', compact('users', 'totalRooms', 'totalUsers', 'totalBookings'));
+        $query = User::query();
 
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('nim', 'like', "%$search%")
+                ->orWhere('no_hp', 'like', "%$search%")
+                ->orWhere('jurusan', 'like', "%$search%");
+            });
+        }
+
+        $users = $query->paginate(10)->appends($request->all());
+
+        return view('admin.show_user', compact('users', 'totalRooms', 'totalUsers', 'totalBookings'));
     }
 
     public function create()

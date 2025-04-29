@@ -41,12 +41,33 @@ class RoomBookingController extends Controller
         return view('admin.show_booking', compact('bookings', 'totalRooms', 'totalBookings'));
     }
 
-    public function roomList()
+    public function roomList(Request $request)
     {
         $totalRooms = Room::count();
         $totalUsers = User::count();
         $totalBookings = RoomBooking::count();
-        $rooms = Room::all();
+        
+        $query = Room::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                ->orWhere('location', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%");
+            });
+        }
+
+        // Filter capacity
+        if ($request->filled('capacity_min')) {
+            $query->where('capacity', '>=', $request->capacity_min);
+        }
+        if ($request->filled('capacity_max')) {
+            $query->where('capacity', '<=', $request->capacity_max);
+        }
+
+        $rooms = $query->paginate(10)->appends($request->all());
+
         return view('booking.booking',  compact('rooms', 'totalRooms', 'totalUsers', 'totalBookings'));
     }
 

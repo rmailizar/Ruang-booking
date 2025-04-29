@@ -32,7 +32,19 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Table Pengguna</h4>
-            </p>
+            {{-- Search dan Filter --}}
+            <form action="{{ route('admin.users.index') }}" method="GET" class="row g-2 align-items-end mb-3">
+                <div class="col-md-3">
+                  <label for="search" class="form-label fw-bold badge rounded text-bg-primary">Cari Pengguna</label>
+                  <input type="text" name="search" id="search" class="form-control"
+                      value="{{ request('search') }}" placeholder="Nama/email/nim etc.">
+                </div>
+                <div class="col-md-3 d-flex align-items-end gap-2">
+                  <button type="submit" class="btn btn-success fw-bold">Terapkan</button>
+                  <a href="{{ route('admin.users.index') }}" class="btn btn-danger fw-bold">Reset</a>
+                </div>
+            </form>
+            {{-- End Search dan Filter --}}
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

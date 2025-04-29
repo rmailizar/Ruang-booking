@@ -27,7 +27,27 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Table Ruangan</h4>
-            </p>
+            {{-- Search dan Filter --}}
+            <form action="{{ route('rooms.index') }}" method="GET" class="row g-2 align-items-end mb-3">
+              <div class="col-md-3">
+                <label for="search" class="form-label fw-bold badge rounded text-bg-primary">Cari Ruangan</label>
+                <input type="text" name="search" id="search" class="form-control"
+                    value="{{ request('search') }}" placeholder="Nama/Lokasi/Deskripsi">
+              </div>
+              <div class="col-md-2">
+                <label for="capacity_min" class="form-label badge rounded fw-bold text-bg-primary">Dari angka:</label>
+                <input type="number" id="capacity_min" name="capacity_min" placeholder="Kapasitas" class="form-control" value="{{ request('capacity_min') }}">
+              </div>
+              <div class="col-md-2">
+                <label for="capacity_max" class="form-label badge rounded fw-bold text-bg-primary">Sampai angka:</label>
+                <input type="number" id="capacity_max" name="capacity_max" placeholder="Kapasitas" class="form-control" value="{{ request('capacity_max') }}">
+              </div>
+              <div class="col-md-3 d-flex align-items-end gap-2">
+                <button type="submit" class="btn btn-success fw-bold">Terapkan</button>
+                <a href="{{ route('rooms.index') }}" class="btn btn-danger fw-bold">Reset</a>
+              </div>
+            </form>
+            {{-- End Search dan Filter --}}
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
@@ -61,6 +81,7 @@
                           <td>{{ $room->capacity }}</td>
                           <td>{{ $room->description }}</td> 
                           <td>
+                            <a href="{{ route('rooms.detail', $room->id) }}" class="btn btn-secondary btn-sm rounded fw-bold">Detail</a> |
                             <a href="{{ route('rooms.edit', $room) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a> | 
                             <form action="{{ route('rooms.destroy', $room) }}" method="POST" style="display:inline">
                                 @csrf @method('DELETE')

@@ -9,7 +9,7 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Formulir Data Ruangan</h4>
-                <form class="forms-sample" action="{{ route('rooms.store') }}" method="POST">
+                <form class="forms-sample" action="{{ route('rooms.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                     <label for="namaRuangan">Nama Ruangan<span class="text-danger">*</span></label>
@@ -22,6 +22,10 @@
                   <div class="form-group">
                     <label for="kapasitas">Kapasitas<span class="text-danger">*</span></label>
                     <input type="number" class="form-control" name="capacity" id="kapasitas" placeholder="Capacity" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="image" class="form-label">Upload Foto (Opsional)</label>
+                    <input class="form-control" type="file" id="image" name="image">
                   </div>
                   <div class="form-group">
                     <label for="deskripsi">Deskripsi (Opsional)</label>
