@@ -21,7 +21,7 @@
   {{-- End Card Total --}}
       
   {{-- Tabel Ruangan --}}
-  <h2>Daftar Ruangan</h2>
+  <h2 class="fw-bold">Daftar Ruangan</h2>
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">

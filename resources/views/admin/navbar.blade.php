@@ -1,4 +1,4 @@
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
+<nav class="sidebar sidebar-offcanvas " id="sidebar">
     <ul class="nav">
 
       <li class="nav-item">
@@ -50,7 +50,7 @@
       <li class="nav-item nav-category">Lainnya</li>
 
       <li class="nav-item">
-        <x-nav-link :href="route('biodata')" :active="false">
+        <x-nav-link :href="route('biodata')" :active="request()->routeIs('biodata')">
           <i class="menu-icon mdi mdi-account-box-outline"></i>
           <span class="menu-title">Biodata</span>
         </x-nav-link>

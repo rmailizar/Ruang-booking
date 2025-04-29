@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2>Tambah Ruangan</h2>
 
-    <div class="content-wrapper">
+<div class="content-wrapper">
+      <h2 class="fw-bold">Tambah Ruangan</h2>
         <div class="row">
           <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
@@ -12,23 +12,23 @@
                 <form class="forms-sample" action="{{ route('rooms.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                    <label for="namaRuangan">Nama Ruangan</label>
+                    <label for="namaRuangan">Nama Ruangan<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="name" id="namaRuangan" placeholder="Room name" required>
                   </div>
                   <div class="form-group">
-                    <label for="lokasi">Lokasi</label>
+                    <label for="lokasi">Lokasi<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="location" id="lokasi" placeholder="Location" required>
                   </div>
                   <div class="form-group">
-                    <label for="kapasitas">Kapasitas</label>
+                    <label for="kapasitas">Kapasitas<span class="text-danger">*</span></label>
                     <input type="number" class="form-control" name="capacity" id="kapasitas" placeholder="Capacity" required>
                   </div>
                   <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
+                    <label for="deskripsi">Deskripsi (Opsional)</label>
                     <textarea name="description" class="form-control" id="deskripsi" placeholder="Description"></textarea><br>
                   </div>
                   <button type="submit" class="btn btn-primary me-2">Submit</button>
-                  <button class="btn btn-light">Cancel</button>
+                  <a class="btn btn-light" href="{{ route('rooms.index') }}">Cancel</a>
                 </form>
               </div>
             </div>

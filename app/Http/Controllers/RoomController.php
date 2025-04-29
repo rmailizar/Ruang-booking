@@ -36,9 +36,23 @@ class RoomController extends Controller
             'name' => 'required',
             'location' => 'required',
             'capacity' => 'required|integer',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Room::create($request->all());
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('user_images', 'public');
+        } else {
+            $imagePath = null;
+        }
+
+        Room::create([
+            'name'         => $request->name,
+            'location'     => $request->location,
+            'capacity'     => $request->capacity,
+            'description'  => $request->description,
+            'image'        => $imagePath,
+        ]);
+
         return redirect()->route('rooms.index')->with('success', 'Room created successfully.');
     }
 
@@ -53,10 +67,21 @@ class RoomController extends Controller
             'name' => 'required',
             'location' => 'required',
             'capacity' => 'required|integer',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $room->update($request->all());
-        return redirect()->route('admin.dashboard')->with('success', 'Room updated successfully.');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('room_images', 'public');
+            $room->image = $imagePath; // update image jika ada file baru
+        }
+
+        $room->update([
+            'name'         => $request->name,
+            'location'     => $request->location,
+            'capacity'     => $request->capacity,
+            'description'  => $request->description,
+        ]);
+        return redirect()->route('rooms.index')->with('success', 'Room updated successfully.');
     }
 
     public function destroy(Room $room)

@@ -21,7 +21,7 @@
         </div>
     </div>   
 
-    <h2>Daftar Pengguna</h2>
+    <h2 class="fw-bold">Daftar Pengguna</h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

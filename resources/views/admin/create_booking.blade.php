@@ -25,27 +25,27 @@
                 <input type="text" class="form-control" name="location" id="lokasi" placeholder="Location" value="{{ $room->location }}" readonly>
               </div>
               <div class="form-group">
-                <label for="tanggal">TANGGAL & JAM MULAI</label>
+                <label for="tanggal">TANGGAL & JAM MULAI<span class="text-danger">*</span></label>
                 <input type="datetime-local" id="tanggal" class="form-control" name="start_time" required>
               </div>
               <div class="form-group">
-                <label for="tanggal">TANGGAL & JAM SELESAI</label>
+                <label for="tanggal">TANGGAL & JAM SELESAI<span class="text-danger">*</span></label>
                 <input type="datetime-local" id="tanggal" class="form-control" name="end_time" required>
               </div>
               <div class="form-group">
-                <label for="peserta">JUMLAH PESERTA</label>
+                <label for="peserta">JUMLAH PESERTA<span class="text-danger">*</span></label>
                 <input type="number" id="peserta" class="form-control" name="jml_peserta" required>
               </div>
               <div class="form-group">
-                <label for="reason">ACARA/KEGIATAN</label>
+                <label for="reason">ACARA/KEGIATAN<span class="text-danger">*</span></label>
                 <textarea class="form-control" id="reason" name="reason"></textarea>
               </div>
               <div class="form-group">
-                <label for="catatan">CATATAN</label>
+                <label for="catatan">CATATAN (Opsional)</label>
                 <textarea class="form-control" id="catatan" name="catatan"></textarea>
               </div>
               <button type="submit" class="btn btn-primary me-2">Submit</button>
-              <button class="btn btn-light">Cancel</button>
+              <a class="btn btn-light" href="{{ route('bookings.roomList') }}">Cancel</a>
             </form>
           </div>
         </div>

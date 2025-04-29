@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="content-wrapper">
-    <h2>Edit Booking</h2>
+    <h2 class="fw-bold">Edit Booking</h2>
     <div class="row">
       <div class="col-md-8 grid-margin stretch-card">
         <div class="card">
@@ -13,7 +13,7 @@
                 @csrf @method('PUT')
 
                 <div class="form-group">
-                    <label for="room_id">Pilih Ruangan</label>
+                    <label for="room_id">Pilih Ruangan<span class="text-danger">*</span></label>
                     <select name="room_id" id="room_id" class="form-control" required>
                         @foreach($rooms as $room)
                             <option value="{{ $room->id }}" {{ $booking->room_id == $room->id ? 'selected' : '' }}>
@@ -24,36 +24,36 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="start_time">Waktu Mulai</label>
+                    <label for="start_time">Waktu Mulai<span class="text-danger">*</span></label>
                     <input type="datetime-local" class="form-control" name="start_time" id="start_time" 
                            value="{{ \Carbon\Carbon::parse($booking->start_time)->format('Y-m-d\TH:i') }}" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="end_time">Waktu Selesai</label>
+                    <label for="end_time">Waktu Selesai<span class="text-danger">*</span></label>
                     <input type="datetime-local" class="form-control" name="end_time" id="end_time" 
                            value="{{ \Carbon\Carbon::parse($booking->end_time)->format('Y-m-d\TH:i') }}" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="jml_peserta">Jumlah Peserta</label>
+                    <label for="jml_peserta">Jumlah Peserta<span class="text-danger">*</span></label>
                     <input type="number" class="form-control" name="jml_peserta" id="jml_peserta" 
                            value="{{ $booking->jml_peserta }}" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="reason">Keperluan</label>
+                    <label for="reason">Acara/Kegiatan<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="reason" id="reason" 
                            placeholder="Contoh: Rapat, Workshop" value="{{ $booking->reason }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="catatan">Catatan Tambahan</label>
+                    <label for="catatan">Catatan Tambahan (Opsional)</label>
                     <textarea name="catatan" class="form-control" id="catatan" placeholder="Tulis catatan tambahan...">{{ $booking->catatan }}</textarea><br>
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Status Booking</label>
+                    <label for="status">Status Booking<span class="text-danger">*</span></label>
                     <select name="status" id="status" class="form-control" required>
                         <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="approved" {{ $booking->status == 'approved' ? 'selected' : '' }}>Approved</option>

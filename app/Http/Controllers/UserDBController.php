@@ -78,8 +78,7 @@ class UserDBController extends Controller
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('user_images', 'public');
-        } else {
-            $imagePath = null;
+            $user->image = $imagePath; // update image jika ada file baru
         }
 
         $user->update([
@@ -89,7 +88,6 @@ class UserDBController extends Controller
             'no_hp'   => $request->no_hp,
             'nim'     => $request->nim,
             'jurusan' => $request->jurusan,
-            'image'    => $imagePath,
         ]);
 
         if ($request->password) {

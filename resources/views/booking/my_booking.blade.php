@@ -6,13 +6,13 @@
 
 <div class="content-wrapper">
     {{-- Tabel Booking --}}
-    <h2>History Peminjaman</h2>
+    <h2 class="fw-bold">History Peminjaman</h2>
     
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">History Peminjaman </h4>
+            <h4 class="card-title">Tabel History Peminjaman </h4>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

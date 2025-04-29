@@ -41,6 +41,9 @@ Route::middleware(['auth'])->group(function(){
     // Halaman daftar ruangan untuk dipinjam (dengan tombol "Pinjam")
     Route::get('/booking-ruangan', [RoomBookingController::class, 'roomList'])->name('bookings.roomList');
 
+    // Detail Ruangan
+    Route::get('/rooms/{id}/detail', [RoomBookingController::class, 'roomDetail'])->name('rooms.detail');
+
     // Ajukan booking
     Route::get('/bookings/create', [RoomBookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings', [RoomBookingController::class, 'store'])->name('bookings.store');
@@ -58,6 +61,10 @@ Route::prefix('admin')->middleware(['auth', 'userAkses:admin'])->group(function 
         
     // Admin - lihat semua booking
     Route::get('/bookings', [RoomBookingController::class, 'index'])->name('bookings.index');
+
+    // Admin - Edit Booking
+    Route::get('/bookings/{booking}/edit', [RoomBookingController::class, 'edit'])->name('bookings.edit');
+    Route::put('/bookings/{booking}', [RoomBookingController::class, 'update'])->name('bookings.update');
     
     // Admin - update status booking atau hapus booking
     Route::put('/bookings/{booking}/status', [RoomBookingController::class, 'updateStatus'])->name('bookings.updateStatus');

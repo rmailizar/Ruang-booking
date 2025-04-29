@@ -17,7 +17,7 @@
                     style="object-fit: cover; height: 200px; width: 100%; max-height: 200px; margin-bottom: 15px;">
                 @else
                     <div class="bg-warning text-white d-flex align-items-center justify-content-center" 
-                        style="height: 200px; width: 100%; max-height: 200px; font-size: 36px;">
+                        style="height: 200px; width: 100%; max-height: 200px; font-size: 36px; margin-bottom: 15px;">
                         {{ $room->name }}
                     </div>
                 @endif

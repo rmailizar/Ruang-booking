@@ -38,6 +38,7 @@
     {{-- End Card Total --}}
     
     {{-- Download Laporan --}}
+    <h3 class="fw-bold">Download Laporan</h3> <hr>
     <form action="{{ route('bookings.export') }}" method="GET" class="mb-3">
         <div class="row g-2 align-items-end">
             <div class="col">
@@ -53,27 +54,62 @@
                     Download Excel
                 </button>
                 <button class="btn btn-danger fw-bold" type="button" onclick="resetDateFilter()">
-                    Cancel
+                    Reset
                 </button>
             </div>
         </div>
-    </form>
-    {{-- end Download Laporan --}}
+    </form> <hr>
+    {{-- end Download Laporan --}}    
 
     {{-- Tabel Booking --}}
-    <h2>Daftar Peminjaman</h2>
+    <h2 class="fw-bold">Daftar Peminjaman</h2>
 
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Table Peminjaman</h4>
+
+            {{-- Search dan Filter --}}
+            <form action="{{ route('bookings.index') }}" method="GET" class="row g-2 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label for="search" class="form-label fw-bold badge rounded text-bg-primary">Cari Nama / NIM:</label>
+                    <input type="text" name="search" id="search" class="form-control"
+                        value="{{ request('search') }}" placeholder="Nama atau NIM">
+                </div>
+                <div class="col-md-2">
+                    <label for="start_date" class="form-label badge rounded fw-bold text-bg-primary">Dari Tanggal:</label>
+                    <input type="date" name="start_date" id="start_date" class="form-control"
+                        value="{{ request('start_date') }}">
+                </div>
+                <div class="col-md-2">
+                    <label for="end_date" class="form-label badge rounded fw-bold text-bg-primary">Sampai Tanggal:</label>
+                    <input type="date" name="end_date" id="end_date" class="form-control"
+                        value="{{ request('end_date') }}">
+                </div>
+                <div class="col-md-2">
+                    <label for="status" class="form-label fw-bold badge rounded text-bg-primary">Pilih Status:</label>
+                    <select name="status" id="status" class="form-select form-control">
+                        <option value="">-- Semua Status --</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-success fw-bold">Terapkan</button>
+                    <a href="{{ route('bookings.index') }}" class="btn btn-danger fw-bold">Reset</a>
+                </div>
+            </form>
+            {{-- End Search dan Filter --}}
+
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr  class="text-center">
                             <th>No</th>
                             <th>Peminjam</th>
+                            <th>No HP</th>
                             <th>Jurusan</th>
                             <th>Ruangan</th>
                             <th>Lokasi</th>
@@ -88,6 +124,7 @@
                             <tr  class="text-center">
                                 <td>{{ $bookings->firstItem() + $index  }}</td>
                                 <td class="lh-base">{{ $booking->user->name }} <br> <span class="text-sm fw-light">{{ $booking->user->nim }}</span> </td>
+                                <td>{{ $booking->user->no_hp }}</td>
                                 <td>{{ $booking->user->jurusan }}</td>
                                 <td>{{ $booking->room->name }}</td>
                                 <td>{{ $booking->room->location }}</td>
