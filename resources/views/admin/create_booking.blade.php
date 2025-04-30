@@ -50,6 +50,7 @@
           </div>
         </div>
       </div>
+      {{-- Jadwal Peminjaman Ruangan --}}
       <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -86,6 +87,18 @@
             </div>
         </div>
     </div>
+    {{-- End Jadwal Peminjaman Ruangan --}}
     </div>
   </div>
+
+  {{-- Notif Error invalid date --}}
+  @if (session('invalid_date'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('invalid_date') }}',
+        });
+    </script>
+@endif
 @endsection

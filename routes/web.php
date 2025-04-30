@@ -51,6 +51,10 @@ Route::middleware(['auth'])->group(function(){
     // Profile
     Route::get('/biodata', [SesiController::class, 'biodata'])->name('biodata');
 
+    // Edit profile/biodata
+    Route::get('/profile/edit', [UserDBController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/profile/update', [UserDBController::class, 'updateProfile'])->name('profile.update');
+
     // logout
     Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
 });
@@ -69,6 +73,9 @@ Route::prefix('admin')->middleware(['auth', 'userAkses:admin'])->group(function 
     // Admin - update status booking atau hapus booking
     Route::put('/bookings/{booking}/status', [RoomBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
     Route::delete('/bookings/{booking}', [RoomBookingController::class, 'destroy'])->name('bookings.destroy');
+
+    Route::get('/bookings/{id}/approve', [RoomBookingController::class, 'approve'])->name('approve');
+    Route::post('/bookings/{id}/reject', [RoomBookingController::class, 'reject'])->name('reject');
 
 
     // Admin - Download History Booking

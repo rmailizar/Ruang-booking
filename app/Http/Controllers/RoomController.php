@@ -56,7 +56,7 @@ class RoomController extends Controller
             'name' => 'required',
             'location' => 'required',
             'capacity' => 'required|integer',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($request->hasFile('image')) {
@@ -87,7 +87,7 @@ class RoomController extends Controller
             'name' => 'required',
             'location' => 'required',
             'capacity' => 'required|integer',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($request->hasFile('image')) {

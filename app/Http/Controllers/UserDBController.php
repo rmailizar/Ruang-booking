@@ -6,6 +6,7 @@ use App\Models\Room;
 use App\Models\RoomBooking;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserDBController extends Controller
@@ -49,7 +50,7 @@ class UserDBController extends Controller
             'no_hp'    => 'required',
             'nim'      => 'nullable',
             'jurusan'  => 'nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($request->hasFile('image')) {
@@ -86,8 +87,12 @@ class UserDBController extends Controller
             'no_hp'   => 'required',
             'nim'     => 'nullable',
             'jurusan' => 'nullable',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
+
+        if (auth()->id() === $user->id && $request->role !== $user->role) {
+            return redirect()->back()->with('error', 'Anda tidak dapat mengubah role akun Anda sendiri.');
+        }
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('user_images', 'public');
@@ -110,8 +115,46 @@ class UserDBController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User berhasil diupdate.');
     }
 
+    public function editProfile(User $user)
+    {
+        $user = Auth::user();
+        return view('edit_biodata', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'email'   => 'required|email|unique:users,email,' . $user->id,
+            'no_hp'   => 'required',
+            'password'=> 'nullable|min:6',
+            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('user_images', 'public');
+            $user->image = $imagePath;
+        }
+
+        $user->email = $request->email;
+        $user->no_hp = $request->no_hp;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('biodata')->with('success', 'Profil berhasil diperbarui.');
+    }
+
     public function destroy(User $user)
     {
+        if (auth()->id() === $user->id) {
+            return redirect()->back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        }
+        
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus.');
     }

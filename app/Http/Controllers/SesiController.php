@@ -38,7 +38,7 @@ class SesiController extends Controller
                 return redirect('user');
             }
         } else{
-            return redirect('')->withErrors('Email atau Password tidak valid')->withInput();
+            return redirect()->back()->with('login_error', 'Email atau Password anda salah')->withInput();
         }
     }
 

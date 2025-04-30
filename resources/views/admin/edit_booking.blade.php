@@ -5,7 +5,7 @@
 <div class="content-wrapper">
     <h2 class="fw-bold">Edit Booking</h2>
     <div class="row">
-      <div class="col-md-8 grid-margin stretch-card">
+      <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Formulir Edit Booking</h4>
@@ -67,7 +67,68 @@
           </div>
         </div>
       </div>
+      {{-- Jadwal Peminjaman Ruangan --}}
+      {{-- <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Jadwal Peminjaman Ruangan: {{ $room->name }}</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Waktu Mulai</th>
+                            <th>Waktu Selesai</th>
+                            <th>Acara/Kegiatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($bookings as $index => $booking)
+                            <tr class="text-center">
+                                <td>{{ $bookings->firstItem() + $index }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->start_time)->format('d/m/Y H:i') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->end_time)->format('d/m/Y H:i') }}</td>
+                                <td>{{ $booking->reason ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center">Belum ada peminjaman untuk ruangan ini.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+                <div class="d-flex justify-content-end mt-3">
+                    {{ $bookings->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+        </div>
+    </div> --}}
+    {{-- End Jadwal Peminjaman Ruangan --}}
     </div>
 </div>
+
+{{-- Error Invalid date --}}
+@if (session('invalid_date'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('invalid_date') }}',
+        });
+    </script>
+@endif
+
+{{-- Error Konflik Jadwal --}}
+@if($errors->has('start_time'))
+<script>
+    Swal.fire({
+        title: 'Konflik Jadwal!',
+        text: '{{ $errors->first('start_time') }}',
+        icon: 'error',
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
 
 @endsection

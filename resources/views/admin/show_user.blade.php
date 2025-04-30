@@ -82,10 +82,12 @@
                             <td>{{ $user->jurusan }}</td>
                             <td>
                                 <a href="{{ route('admin.users.edit', $user->id) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a> |
-                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline">
-                                    @csrf @method('DELETE')
-                                    <button class="btn rounded btn-sm btn-danger" onclick="return confirm('Hapus user ini?')">Hapus</button>
-                                </form>
+                                
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline">
+                                        @csrf @method('DELETE')
+                                        <button class="btn rounded btn-sm btn-danger btn-delete-user" data-nama="{{ $user->name }}">Hapus</button>
+                                    </form>
+                              
                             </td>
                         </tr>
                         @endforeach
@@ -100,4 +102,22 @@
       </div>
     </div>
   </div>
+
+  <script>
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: '{{ session('error') }}',
+        });
+    @endif
+
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+        });
+    @endif
+</script>
 @endsection

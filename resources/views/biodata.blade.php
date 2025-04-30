@@ -48,6 +48,9 @@
                         <i class="menu-icon mdi mdi-numeric-0-box-multiple-outline text-primary"></i>
                         <strong>No HP:</strong> {{ $user->no_hp ?? '-' }}
                       </li>
+                      <li>
+                        <a href="{{ route('profile.edit', $user->id) }}" class="btn rounded btn-sm btn-warning fw-bold text-decoration-none">Edit Profile</a>
+                      </li>
                   </ul>
               </div>
           </div>

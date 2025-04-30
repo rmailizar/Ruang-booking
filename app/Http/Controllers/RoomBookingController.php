@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\RoomBookingsExport;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RoomBookingController extends Controller
@@ -20,9 +21,19 @@ class RoomBookingController extends Controller
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->whereHas('user', function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                  ->orWhere('nim', 'like', "%$search%");
+        
+            $query->where(function ($q) use ($search) {
+                // Cari berdasarkan user
+                $q->whereHas('user', function ($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%$search%")
+                              ->orWhere('nim', 'like', "%$search%");
+                });
+        
+                // Atau cari berdasarkan ruangan
+                $q->orWhereHas('room', function ($roomQuery) use ($search) {
+                    $roomQuery->where('name', 'like', "%$search%")
+                              ->orWhere('location', 'like', "%$search%");
+                });
             });
         }
     
@@ -95,11 +106,13 @@ class RoomBookingController extends Controller
 
     public function export(Request $request)
     {
-        $start = $request->input('start_date') . ' 00:00:00';
-        $end = $request->input('end_date') . ' 23:59:59';
-    
-        $filename = 'room_bookings_' . now()->format('Ymd_His') . '.xlsx';
-        return Excel::download(new RoomBookingsExport($start, $end), $filename);
+        $start = $request->input('start_date') ? $request->input('start_date') . ' 00:00:00' : null;
+        $end = $request->input('end_date') ? $request->input('end_date') . ' 23:59:59' : null;
+        $status = $request->input('status');
+
+        $filename = 'Laporan_bookings_' . now()->format('Ymd_His') . '.xlsx';
+        
+        return Excel::download(new RoomBookingsExport($start, $end, $status), $filename);
     }
 
     public function create(Request $request)
@@ -128,6 +141,11 @@ class RoomBookingController extends Controller
     
         if ($request->jml_peserta > $room->capacity) {
             return back()->withErrors(['jml_peserta' => 'Jumlah peserta melebihi kapasitas ruangan.'])->withInput();
+        }
+
+        if (Carbon::parse($request->end_time)->lt(now())) {
+            session()->flash('invalid_date', 'Tanggal booking sudah lewat dan tidak valid.');
+            return back()->withInput();
         }
     
         $conflict = RoomBooking::where('room_id', $request->room_id)
@@ -162,8 +180,8 @@ class RoomBookingController extends Controller
 
     public function edit(RoomBooking $booking)
     {
-    $rooms = Room::all(); 
-    return view('admin.edit_booking', compact('booking', 'rooms'));
+        $rooms = Room::all(); 
+        return view('admin.edit_booking', compact('booking', 'rooms'));
     }
 
     public function update(Request $request, RoomBooking $booking)
@@ -182,6 +200,11 @@ class RoomBookingController extends Controller
         if ($request->jml_peserta > $room->capacity) {
             return back()->withErrors(['jml_peserta' => 'Jumlah peserta melebihi kapasitas ruangan.'])->withInput();
         }
+
+        if (Carbon::parse($request->end_time)->lt(now())) {
+            session()->flash('invalid_date', 'Tanggal booking sudah lewat dan tidak valid.');
+            return back()->withInput();
+        }
     
         $conflict = RoomBooking::where('room_id', $request->room_id)
             ->where('status', 'approved')
@@ -196,9 +219,18 @@ class RoomBookingController extends Controller
             })
             ->exists();
     
-        if ($conflict) {
-            return back()->withErrors(['start_time' => 'Ruangan sudah dibooking pada waktu tersebut.'])->withInput();
-        }
+            if ($conflict && $request->status === 'approved') {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'conflict' => true,
+                        'message' => 'Ruangan sudah dibooking pada waktu tersebut.'
+                    ]);
+                }
+            
+                return back()
+                    ->withErrors(['start_time' => 'Ruangan sudah dibooking pada waktu tersebut.'])
+                    ->withInput();
+            }
     
         $booking->update([
             'room_id' => $request->room_id,
@@ -213,16 +245,58 @@ class RoomBookingController extends Controller
         return redirect()->route('bookings.index')->with('success', 'Peminjaman berhasil diperbarui.');
     }
 
-    public function updateStatus(Request $request, RoomBooking $booking)
+    public function approve($id)
     {
-        $request->validate(['status' => 'required|in:approved,rejected']);
-
-        $booking->update([
-            'status' => $request->status
-        ]);
-
-        return redirect()->route('bookings.index')->with('success', 'Status diperbarui.');
+        $booking = RoomBooking::findOrFail($id);
+    
+        // Cek apakah ada booking lain yang bentrok dan sudah approved
+        $conflict = RoomBooking::where('room_id', $booking->room_id)
+            ->where('status', 'approved')
+            ->where(function ($query) use ($booking) {
+                $query->whereBetween('start_time', [$booking->start_time, $booking->end_time])
+                    ->orWhereBetween('end_time', [$booking->start_time, $booking->end_time])
+                    ->orWhere(function ($q) use ($booking) {
+                        $q->where('start_time', '<', $booking->start_time)
+                          ->where('end_time', '>', $booking->end_time);
+                    });
+            })->first();
+    
+        if ($conflict) {
+            // Kirim data konflik ke tampilan SweetAlert
+            return response()->json([
+                'conflict' => true,
+                'user_email' => $conflict->user->email,
+                'start_time' => $conflict->start_time,
+                'end_time' => $conflict->end_time,
+            ]);
+        }
+    
+        // Kalau tidak bentrok, set status approved
+        $booking->status = 'approved';
+        $booking->save();
+    
+        return response()->json(['success' => true]);
     }
+
+    public function reject($id)
+    {
+        $booking = RoomBooking::findOrFail($id);
+        $booking->status = 'rejected';
+        $booking->save();
+    
+        return response()->json(['success' => true, 'message' => 'Booking berhasil ditolak.']);
+    }
+    
+    // public function updateStatus(Request $request, RoomBooking $booking)
+    // {
+    //     $request->validate(['status' => 'required|in:approved,rejected']);
+
+    //     $booking->update([
+    //         'status' => $request->status
+    //     ]);
+
+    //     return redirect()->route('bookings.index')->with('success', 'Status diperbarui.');
+    // }
 
     // Batalkan booking
     public function cancel(RoomBooking $booking)
@@ -235,6 +309,6 @@ class RoomBookingController extends Controller
     public function destroy(RoomBooking $booking)
     {
         $booking->delete();
-        return redirect()->route('bookings.index')->with('success', 'Booking dihapus.');
+        return response()->json(['success' => true, 'message' => 'Booking berhasil dihapus.']);
     }
 }
