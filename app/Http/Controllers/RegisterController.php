@@ -23,6 +23,9 @@ class RegisterController extends Controller
             'no_hp'    => 'required',
             'nim'      => 'nullable',
             'jurusan'  => 'nullable',
+        ], [
+            'email.unique' => 'Email sudah terdaftar, silahkan gunakan email lain.',
+            'password.confirmed' => 'Konfirmasi password anda salah',
         ]);
 
         User::create([
@@ -35,6 +38,6 @@ class RegisterController extends Controller
             'jurusan'  => $request->jurusan,
         ]);
 
-        return redirect('/')->with('success', 'Register berhasil.');
+        return redirect()->route('login')->with('success', 'Register berhasil dilakukan.');
     }
 }

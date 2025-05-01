@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+
+   <!-- jQuery -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   <!-- SweetAlert2 -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -26,17 +32,6 @@
             <img src="{{ asset('assets/badak/badak app.png') }}" alt="SiBadak Logo" >
           </div>
           <h4 class="text-center fw-bold">REGISTER</h4>
-              
-
-              @if ($errors->any())
-                <div style="color: red;">
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                </div>
-              @endif
 
               <form method="POST" action="{{ route('register.post') }}" class="pt-3">
                 @csrf
@@ -91,5 +86,25 @@
   <script src="../../assets/js/settings.js"></script>
   <script src="../../assets/js/hoverable-collapse.js"></script>
   <script src="../../assets/js/todolist.js"></script>
+  @if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Register',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonColor: '#d33'
+        });
+    </script>
+  @endif
+
+  @if(session('success'))
+  <script>
+  Swal.fire({
+      icon: 'success',
+      title: 'Berhasil',
+      text: '{{ session('success') }}',
+  });
+  </script>
+  @endif
 </body>
 </html>

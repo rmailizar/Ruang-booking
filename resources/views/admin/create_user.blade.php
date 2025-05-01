@@ -64,5 +64,5 @@
             confirmButtonColor: '#d33'
         });
     </script>
-@endif
+  @endif
 @endsection
