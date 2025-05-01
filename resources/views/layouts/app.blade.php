@@ -44,12 +44,7 @@
           </div>
           <div>
             <a class="navbar-brand brand-logo" href="#">
-              <img src="{{asset('assets/badak/badak login.png')}}" alt="logo" />
-              <span class="fw-bold text-dark">SiBadak</span>
-            </a>
-            <a class="navbar-brand brand-logo-mini" href="#">
-              <img src="{{asset('assets/badak/badak login.png')}}" alt="logo" />
-              <span class="fw-bold text-dark">SiBadak</span>
+              <img src="{{asset('assets/badak/badak app.png')}}" alt="logo" />
             </a>
           </div>
         </div>

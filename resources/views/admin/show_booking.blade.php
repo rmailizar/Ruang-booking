@@ -11,30 +11,30 @@
 <div class="content-wrapper">
     {{-- Card Total --}}
     <div class="container py-4">
-        <div class="row mb-4">
-            <!-- Total Ruangan -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-white bg-primary shadow">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">Total Ruangan</h5>
-                        <h2></h2>
-                        <p>Total ruangan yang dimiliki</p>
-                        <p class="fw-semibold fs-3">{{ $totalRooms }}</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Total Peminjaman -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-white bg-danger shadow">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">Total Peminjaman</h5>
-                        <h2></h2>
-                        <p>Total peminjaman dari awal</p>
-                        <p class="fw-semibold fs-3">{{ $totalBookings }}</p>
-                    </div>
+    <!-- Scrollable Row -->
+    <div class="d-flex flex-nowrap overflow-auto mb-4" style="gap: 1rem;">
+        <!-- Total Ruangan -->
+        <div class="col-md-4 mb-4" style="flex: 0 0 auto;">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-white">Total Ruangan</h5>
+                    <p>Total ruangan yang dimiliki</p>
+                    <p class="fw-semibold fs-3">{{ $totalRooms }}</p>
                 </div>
             </div>
         </div>
+        <!-- Total Peminjaman -->
+        <div class="col-md-4 mb-4" style="flex: 0 0 auto;">
+            <div class="card text-white bg-danger shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-white">Total Peminjaman</h5>
+                    <p>Total peminjaman dari awal</p>
+                    <p class="fw-semibold fs-3">{{ $totalBookings }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     {{-- End Card Total --}}
     
     {{-- Download Laporan --}}

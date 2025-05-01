@@ -23,8 +23,7 @@
           <div class="col-lg-5 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
             <div class="brand-logo text-center">
-          <img src="{{ asset('assets/badak/badak login.png') }}" alt="SiBadak Logo" />
-          <span class="fw-bold fs-5 text-primary">SiBadak</span>
+            <img src="{{ asset('assets/badak/badak app.png') }}" alt="SiBadak Logo" >
           </div>
           <h4 class="text-center fw-bold">REGISTER</h4>
               
