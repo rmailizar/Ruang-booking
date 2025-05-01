@@ -44,13 +44,15 @@ class UserDBController extends Controller
     {
         $request->validate([
             'name'     => 'required',
-            'email'    => 'required|email|unique:users',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'role'     => 'required|in:user,admin',
             'no_hp'    => 'required',
             'nim'      => 'nullable',
             'jurusan'  => 'nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ], [
+            'email.unique' => 'Email sudah terdaftar, silahkan gunakan email lain.',
         ]);
 
         if ($request->hasFile('image')) {

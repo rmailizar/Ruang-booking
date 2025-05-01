@@ -8,7 +8,7 @@
       <div class="col-md-8 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Formulir Data Ruangan</h4>
+            <h4 class="card-title">Formulir Data User</h4>
             <form class="forms-sample" action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
@@ -54,4 +54,15 @@
       </div>
     </div>
   </div>
+
+  @if ($errors->any())
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Menambahkan User',
+            html: `{!! implode('<br>', $errors->all()) !!}`,
+            confirmButtonColor: '#d33'
+        });
+    </script>
+@endif
 @endsection

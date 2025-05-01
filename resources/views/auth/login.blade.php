@@ -40,7 +40,6 @@
       <div class="col-md-6 bg-white d-flex align-items-center justify-content-center p-4">
         <div class="w-100" style="max-width: 400px;">
           <div class="text-center mb-4">
-            <img src="{{ asset('assets/badak/badak login.png') }}" alt="Logo" style="width: 200px;">
             <h4 class="fw-bold mt-2 mb-1">LOGIN</h4>
             <p class="text-muted mb-3">Sign in to continue</p>
           </div>

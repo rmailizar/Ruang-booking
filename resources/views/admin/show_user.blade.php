@@ -83,10 +83,11 @@
                             <td>
                                 <a href="{{ route('admin.users.edit', $user->id) }}" class="btn rounded btn-sm btn-warning text-decoration-none">Edit</a> |
                                 
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline">
-                                        @csrf @method('DELETE')
-                                        <button class="btn rounded btn-sm btn-danger btn-delete-user" data-nama="{{ $user->name }}">Hapus</button>
-                                    </form>
+                                <form id="delete-user-form-{{ $user->id }}" action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline">
+                                    @csrf @method('DELETE')
+                                    <button type="button" class="btn rounded btn-sm btn-danger btn-delete-user"
+                                            data-id="{{ $user->id }}" data-nama="{{ $user->name }}">Hapus</button>
+                                </form>
                               
                             </td>
                         </tr>
@@ -119,5 +120,30 @@
             text: '{{ session('success') }}',
         });
     @endif
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-delete-user').forEach(button => {
+            button.addEventListener('click', function () {
+                const userId = this.dataset.id;
+                const userName = this.dataset.nama;
+
+                Swal.fire({
+                    title: `Hapus User ${userName}?`,
+                    text: "Data user akan dihapus secara permanen!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Ya, Hapus",
+                    cancelButtonText: "Batal",
+                    confirmButtonColor: "#d33"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-user-form-${userId}`).submit();
+                    }
+                });
+            });
+        });
+    });
 </script>
 @endsection

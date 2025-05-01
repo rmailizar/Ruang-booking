@@ -45,10 +45,10 @@
                                 <td>{{ $booking->catatan ?? '-' }}</td>
                                 <td>
                                     @if($booking->status === 'pending' || $booking->status === 'approved')
-                                    <form action="{{ route('bookings.cancel', $booking) }}" method="POST" style="display:inline">
+                                    <form id="delete-booking-form-{{ $booking->id }}" action="{{ route('bookings.cancel', $booking) }}" method="POST" style="display:inline">
                                         @csrf 
                                         @method('DELETE')
-                                        <button class="btn rounded btn-sm btn-danger">Batalkan</button>
+                                        <button type="button" class="btn btn-cancel-booking rounded btn-sm btn-danger"  data-id="{{ $booking->id }}" data-nama="{{ $booking->room->name }}">Batalkan</button>
                                     </form>
                                     @endif
                                 </td>
@@ -67,5 +67,29 @@
  </div>
     {{-- End Table Booking --}}
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.btn-cancel-booking').forEach(button => {
+                button.addEventListener('click', function () {
+                    const bookingId = this.dataset.id;
+                    const roomName = this.dataset.nama;
+    
+                    Swal.fire({
+                        title: `Batalkan Booking <br> Ruang ${roomName}?`,
+                        text: "Data Booking akan dihapus secara permanen!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Ya, Hapus",
+                        cancelButtonText: "Batal",
+                        confirmButtonColor: "#d33"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById(`delete-booking-form-${bookingId}`).submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
 @endsection

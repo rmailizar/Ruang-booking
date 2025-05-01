@@ -12,7 +12,7 @@
       <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Formulir Booking</h4>
+            <h4 class="card-title">Form Data Peminjaman</h4>
             <form class="forms-sample" action="{{ route('bookings.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="room_id" value="{{ $room->id }}">
