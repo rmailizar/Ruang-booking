@@ -49,7 +49,7 @@
                         <strong>No HP:</strong> {{ $user->no_hp ?? '-' }}
                       </li>
                       <li>
-                        <a href="{{ route('profile.edit', $user->id) }}" class="btn rounded btn-sm btn-warning fw-bold text-decoration-none">Edit Profile</a>
+                        <a href="{{ route('profile.edit', $user->id) }}" class="btn rounded btn-sm btn-primary fw-bold text-decoration-none">Edit Profile</a>
                       </li>
                   </ul>
               </div>

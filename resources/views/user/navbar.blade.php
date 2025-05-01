@@ -24,7 +24,21 @@
         </x-nav-link>
       </li>
 
+      <li class="nav-item">
+        <x-nav-link :href="route('calendar.index')" :active="request()->routeIs('calendar.index')">
+          <i class="menu-icon mdi mdi-calendar-clock "></i>
+          <span class="menu-title">Jadwal Peminjaman</span>
+        </x-nav-link>
+      </li>
+
       <li class="nav-item nav-category">Lainnya</li>
+
+      <li class="nav-item">
+        <x-nav-link :href="route('biodata')" :active="request()->routeIs('biodata')">
+          <i class="menu-icon mdi mdi-account-box-outline"></i>
+          <span class="menu-title">Biodata</span>
+        </x-nav-link>
+      </li>
 
       <li class="nav-item">
         <x-nav-link :href="route('logout')" :active="false">

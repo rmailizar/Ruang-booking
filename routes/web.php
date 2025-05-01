@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomBookingController;
 use App\Http\Controllers\RoomController;
@@ -35,6 +36,11 @@ Route::middleware(['auth'])->group(function(){
     // Batalkan booking
     Route::delete('/bookings/{booking}', [RoomBookingController::class, 'cancel'])->name('bookings.cancel');
 
+    // Fullcalendar data Booking
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('/calendar/data', [CalendarController::class, 'getBookings'])->name('calendar.data');
+    Route::get('/calendar/detail/{id}', [CalendarController::class, 'showBookingDetail']);
+    
     // Lihat Room 
     Route::get('/rooms/show', [RoomController::class, 'index'])->name('rooms.index');
 

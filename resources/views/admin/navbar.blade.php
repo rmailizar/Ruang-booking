@@ -47,6 +47,13 @@
         </x-nav-link>
       </li>
 
+      <li class="nav-item">
+        <x-nav-link :href="route('calendar.index')" :active="request()->routeIs('calendar.index')">
+          <i class="menu-icon mdi mdi-calendar-clock "></i>
+          <span class="menu-title">Jadwal Peminjaman</span>
+        </x-nav-link>
+      </li>
+
       <li class="nav-item nav-category">Lainnya</li>
 
       <li class="nav-item">

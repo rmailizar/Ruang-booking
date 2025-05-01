@@ -245,6 +245,7 @@ class RoomBookingController extends Controller
         return redirect()->route('bookings.index')->with('success', 'Peminjaman berhasil diperbarui.');
     }
 
+    // Tombol Approve
     public function approve($id)
     {
         $booking = RoomBooking::findOrFail($id);
@@ -278,6 +279,7 @@ class RoomBookingController extends Controller
         return response()->json(['success' => true]);
     }
 
+    // Tombol Reject
     public function reject($id)
     {
         $booking = RoomBooking::findOrFail($id);
@@ -286,17 +288,6 @@ class RoomBookingController extends Controller
     
         return response()->json(['success' => true, 'message' => 'Booking berhasil ditolak.']);
     }
-    
-    // public function updateStatus(Request $request, RoomBooking $booking)
-    // {
-    //     $request->validate(['status' => 'required|in:approved,rejected']);
-
-    //     $booking->update([
-    //         'status' => $request->status
-    //     ]);
-
-    //     return redirect()->route('bookings.index')->with('success', 'Status diperbarui.');
-    // }
 
     // Batalkan booking
     public function cancel(RoomBooking $booking)
