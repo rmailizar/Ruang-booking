@@ -60,7 +60,7 @@ class RoomController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('user_images', 'public');
+            $imagePath = $request->file('image')->store('room_images', 'public');
         } else {
             $imagePath = null;
         }

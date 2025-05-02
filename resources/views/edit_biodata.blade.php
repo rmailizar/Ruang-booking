@@ -37,7 +37,7 @@
                 <input class="form-control" type="file" id="image" name="image">
               </div>
               <button type="submit" class="btn btn-primary me-2">Update</button>
-              <a class="btn btn-light" href="{{ route('admin.users.index') }}">Cancel</a>
+              <a class="btn btn-light" href="{{ route('biodata') }}">Cancel</a>
             </form>
           </div>
         </div>
